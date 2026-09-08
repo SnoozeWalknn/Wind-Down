@@ -1,0 +1,15 @@
+<UserControl x:Class="WindDown.App.Controls.TimeDial" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+ <StackPanel Spacing="6" HorizontalAlignment="Stretch">
+  <Border x:Name="DialSurface" CornerRadius="12" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" ManipulationMode="TranslateY" ManipulationDelta="OnManipulation" PointerWheelChanged="OnWheel">
+   <Grid Padding="8,2" RowSpacing="0">
+    <Grid.RowDefinitions><RowDefinition Height="38"/><RowDefinition Height="76"/><RowDefinition Height="38"/></Grid.RowDefinitions>
+    <RepeatButton x:Name="Previous" Style="{StaticResource DialStep}" Click="OnPrevious" AutomationProperties.Name="Decrease value"/>
+    <TextBox x:Name="Editor" Grid.Row="1" FontFamily="Segoe UI Variable Display" FontSize="54" FontWeight="SemiLight" TextAlignment="Center" VerticalContentAlignment="Center" Padding="0" BorderThickness="0" Background="Transparent" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" SelectionHighlightColor="{ThemeResource SystemControlHighlightAccentBrush}" MaxLength="3" InputScope="Number" Text="00" BeforeTextChanging="BeforeTextChanging" TextChanged="TextChanged" GotFocus="OnFocus" LostFocus="OnBlur" KeyDown="OnKeyDown">
+     <TextBox.Resources><SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent"/><SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent"/></TextBox.Resources>
+    </TextBox>
+    <RepeatButton x:Name="Next" Grid.Row="2" Style="{StaticResource DialStep}" Click="OnNext" AutomationProperties.Name="Increase value"/>
+   </Grid>
+  </Border>
+  <TextBlock x:Name="Caption" HorizontalAlignment="Center" Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12"/>
+ </StackPanel>
+</UserControl>

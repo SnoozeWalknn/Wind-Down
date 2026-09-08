@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="midnight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#172640"/>
+      <stop offset="1" stop-color="#08101D"/>
+    </linearGradient>
+    <mask id="crescent">
+      <rect width="1024" height="1024" fill="black"/>
+      <circle cx="464" cy="512" r="288" fill="white"/>
+      <circle cx="600" cy="392" r="292" fill="black"/>
+    </mask>
+  </defs>
+  <rect x="48" y="48" width="928" height="928" rx="220" fill="url(#midnight)"/>
+  <rect x="48.5" y="48.5" width="927" height="927" rx="219.5" fill="none" stroke="#395173" stroke-opacity=".72"/>
+  <circle cx="464" cy="512" r="288" fill="#DDF5FF" mask="url(#crescent)"/>
+</svg>

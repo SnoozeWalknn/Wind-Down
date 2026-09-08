@@ -1,0 +1,50 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5F5145C6-C367-4E20-862D-526A77FA3BE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindDown.Core", "src\WindDown.Core\WindDown.Core.csproj", "{3BA0BC51-C813-45BD-967D-D2C12720E64C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindDown.Worker", "src\WindDown.Worker\WindDown.Worker.csproj", "{346CE325-5BF9-48BA-BA09-7050EF8752E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindDown.App", "src\WindDown.App\WindDown.App.csproj", "{AF2EBDB7-9D9A-4D68-B301-5662D9154BD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D1B5D4B8-3E91-4CC0-BDB6-A249D4D3A66E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindDown.Tests", "tests\WindDown.Tests\WindDown.Tests.csproj", "{1F41B629-AB32-43AA-85E1-22E3BE425AE9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BA0BC51-C813-45BD-967D-D2C12720E64C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BA0BC51-C813-45BD-967D-D2C12720E64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BA0BC51-C813-45BD-967D-D2C12720E64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BA0BC51-C813-45BD-967D-D2C12720E64C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{346CE325-5BF9-48BA-BA09-7050EF8752E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{346CE325-5BF9-48BA-BA09-7050EF8752E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{346CE325-5BF9-48BA-BA09-7050EF8752E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{346CE325-5BF9-48BA-BA09-7050EF8752E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF2EBDB7-9D9A-4D68-B301-5662D9154BD5}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{AF2EBDB7-9D9A-4D68-B301-5662D9154BD5}.Debug|Any CPU.Build.0 = Debug|x64
+		{AF2EBDB7-9D9A-4D68-B301-5662D9154BD5}.Release|Any CPU.ActiveCfg = Release|x64
+		{AF2EBDB7-9D9A-4D68-B301-5662D9154BD5}.Release|Any CPU.Build.0 = Release|x64
+		{1F41B629-AB32-43AA-85E1-22E3BE425AE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F41B629-AB32-43AA-85E1-22E3BE425AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F41B629-AB32-43AA-85E1-22E3BE425AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F41B629-AB32-43AA-85E1-22E3BE425AE9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3BA0BC51-C813-45BD-967D-D2C12720E64C} = {5F5145C6-C367-4E20-862D-526A77FA3BE9}
+		{346CE325-5BF9-48BA-BA09-7050EF8752E3} = {5F5145C6-C367-4E20-862D-526A77FA3BE9}
+		{AF2EBDB7-9D9A-4D68-B301-5662D9154BD5} = {5F5145C6-C367-4E20-862D-526A77FA3BE9}
+		{1F41B629-AB32-43AA-85E1-22E3BE425AE9} = {D1B5D4B8-3E91-4CC0-BDB6-A249D4D3A66E}
+	EndGlobalSection
+EndGlobal
