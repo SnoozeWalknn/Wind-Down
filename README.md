@@ -2,6 +2,12 @@
 
 A native Windows 11 utility for scheduling **Shut Down** or **Sleep**, built with C#, WinUI 3 and Windows App SDK.
 
+## Screenshot
+
+<p align="center">
+  <img src="winddown.png" alt="Wind Down power timer" width="475">
+</p>
+
 ## Run
 
 Open **Wind Down.exe** in the published `artifacts/Wind-Down-1.0-Windows-x64` folder. Keep the entire folder together. The x64 release includes .NET and Windows App SDK runtimes; no Visual Studio, administrator rights, or separate runtime install is required.
