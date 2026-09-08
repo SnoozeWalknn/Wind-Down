@@ -2,11 +2,19 @@
 
 Wind Down schedules this PC to **Shut Down** or **Sleep** after a duration or at a specific clock time.
 
-## Install
+## Install or run portably
 
-Keep this folder together. Run **Install.ps1** with PowerShell for a permanent per-user installation. Wind Down is copied to `%LOCALAPPDATA%\Programs\Wind Down` and a **Wind Down** Start-menu shortcut is created. Administrator rights and separate runtime installation are not required.
+You can run **Wind Down.exe** directly from this folder without installing it. Keep the entire folder together.
 
-You can also run **Wind Down.exe** directly from this folder without installing it.
+For a permanent per-user installation, run **Install.ps1** with PowerShell. Wind Down is copied to `%LOCALAPPDATA%\Programs\Wind Down`, added to the Start menu and Windows Installed Apps, and registered as the `wind-down` command. Administrator rights and separate runtime installation are not required.
+
+After installation:
+
+```text
+wind-down             Open Wind Down
+wind-down repair      Restore its Windows integration
+wind-down uninstall   Uninstall Wind Down
+```
 
 ## Use
 
@@ -20,6 +28,6 @@ Windows owns the scheduled deadline, so the timer remains registered if the visi
 
 ## Remove
 
-Cancel any active schedule, choose **Exit Wind Down**, and run **Uninstall.ps1** from the installed application folder. The uninstaller refuses to remove files while an active schedule still references them.
+Cancel any active schedule, choose **Exit Wind Down**, and run `wind-down uninstall`. You can also uninstall Wind Down from **Settings → Apps → Installed apps** or run **Uninstall.ps1** directly. The uninstaller refuses removal while an active Wind Down schedule still references the installation.
 
 This release is unsigned. Windows may show its standard warning for software from an unknown publisher.

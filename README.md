@@ -8,11 +8,31 @@ A native Windows 11 utility for scheduling **Shut Down** or **Sleep**, built wit
   <img src="winddown.png" alt="Wind Down power timer" width="475">
 </p>
 
-## Run
+## Install
 
-Open **Wind Down.exe** in the published `artifacts/Wind-Down-1.0-Windows-x64` folder. Keep the entire folder together. The x64 release includes .NET and Windows App SDK runtimes; no Visual Studio, administrator rights, or separate runtime install is required.
+Run this one-line bootstrap in PowerShell. It downloads the Windows x64 app from the latest release and the installer integration from this official repository, then installs everything for the current user. Administrator rights are not required.
 
-For a permanent per-user installation, exit Wind Down and run **Install.ps1** from that folder with PowerShell. It copies the app into `%LOCALAPPDATA%\Programs\Wind Down` and adds a Start-menu shortcut. Cancel active schedules before installing an update or moving the folder. The release is unsigned; signing for public distribution requires the publisher's certificate.
+```powershell
+irm https://raw.githubusercontent.com/SnoozeWalknn/Wind-Down/main/install.ps1 | iex
+```
+
+After installation, use `wind-down` from PowerShell or Command Prompt to open the app. The installer also adds Wind Down to the Start menu and **Settings → Apps → Installed apps**.
+
+```text
+wind-down             Open Wind Down
+wind-down repair      Restore the command, shortcut, and Installed Apps entry
+wind-down uninstall   Uninstall Wind Down
+```
+
+If an already-open terminal does not recognize `wind-down`, open a new terminal once so it receives the updated user PATH.
+
+## Portable use
+
+Download `Wind-Down-1.0-Windows-x64.zip` from the latest release, extract it, and open **Wind Down.exe**. Keep the entire folder together. The x64 release includes .NET and Windows App SDK runtimes; no Visual Studio, administrator rights, or separate runtime install is required.
+
+Portable use remains installation-free. If you later want a permanent per-user installation, run **Install.ps1** from the extracted folder; this is equivalent to `wind-down install`.
+
+The release is unsigned, so Windows may show its standard warning for software from an unknown publisher.
 
 ## Use
 
@@ -43,6 +63,14 @@ Tests use an isolated per-user task and an inert worker mode. **They never call 
 
 The design, state transitions, timing policy, and platform constraints are documented in `docs/Architecture.md`.
 
-## Remove
+## Uninstall
 
-Cancel the active schedule, choose **Exit Wind Down**, then run **Uninstall.ps1** from the app folder. The uninstaller refuses removal while a power schedule remains active. No service, startup task, password, or elevated task is installed.
+Cancel any active schedule, choose **Exit Wind Down**, then use either method:
+
+```powershell
+wind-down uninstall
+```
+
+Or open **Settings → Apps → Installed apps**, find **Wind Down**, and choose **Uninstall**. The uninstaller refuses removal while a Wind Down power schedule remains active. It removes only Wind Down's installed files, shortcut, command PATH entry, protocol registration, Installed Apps record, and scheduled tasks. Appearance preferences remain in `%LOCALAPPDATA%\Wind Down`.
+
+No service, startup task, password, or elevated task is installed.

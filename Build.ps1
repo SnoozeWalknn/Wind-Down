@@ -28,7 +28,7 @@ if ($LASTEXITCODE) { throw 'Worker build failed.' }
 & $dotnet publish src/WindDown.App/WindDown.App.csproj -c Release -p:Platform=x64 -o $output "-p:RestorePackagesPath=$packagePath"
 if ($LASTEXITCODE) { throw 'Application build failed.' }
 
-Copy-Item packaging/Install.ps1,packaging/Uninstall.ps1 -Destination $output
+Copy-Item packaging/Install.ps1,packaging/Uninstall.ps1,packaging/WindDown.Cli.ps1,packaging/wind-down.cmd -Destination $output
 Copy-Item packaging/README.md -Destination (Join-Path $output 'README.md')
 Get-ChildItem -LiteralPath $output -Recurse -File -Filter '*.pdb' | Remove-Item -Force
 
@@ -45,7 +45,7 @@ $sourceRoots = @('src', 'tests', 'docs', 'packaging', 'tools')
 $sourceFiles = @($sourceRoots | ForEach-Object {
     Get-ChildItem -LiteralPath $_ -Recurse -File | Where-Object { $_.FullName -notmatch '[\\/](bin|obj)[\\/]' }
 })
-$sourceFiles += @('.gitignore', 'Build.ps1', 'Directory.Build.props', 'README.md', 'WindDown.sln') | ForEach-Object { Get-Item -LiteralPath $_ }
+$sourceFiles += @('.gitignore', 'Build.ps1', 'Directory.Build.props', 'install.ps1', 'README.md', 'WindDown.sln') | ForEach-Object { Get-Item -LiteralPath $_ }
 $sourceHashes = @($sourceFiles | Sort-Object FullName | ForEach-Object {
     [ordered]@{ Path = [IO.Path]::GetRelativePath($PSScriptRoot, $_.FullName); SHA256 = (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash }
 })
