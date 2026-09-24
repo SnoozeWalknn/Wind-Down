@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Wind Down command-line entry point for Linux.
+set -euo pipefail
+APP_DIR="$(cd "$(dirname "$(readlink -f "$0")")/../lib/wind-down" 2>/dev/null && pwd || true)"
+APP="$APP_DIR/WindDown"
+# Turn off the .NET debugging socket; Wind Down has no use for it.
+export DOTNET_EnableDiagnostics=0
+if [ ! -x "$APP" ]; then echo "Wind Down is not installed correctly: $APP is missing. Reinstall it." >&2; exit 1; fi
+per_user() { [ -x "$APP_DIR/install.sh" ] && [ "$APP_DIR" = "$HOME/.local/lib/wind-down" ]; }
+help() {
+  cat <<'TEXT'
+wind-down               Open Wind Down
+wind-down status        Show the active schedule (exit code 3 while one is active)
+wind-down cancel        Cancel the active schedule
+wind-down repair        Restore the command, app-menu entry, and icon (per-user install)
+wind-down uninstall     Uninstall Wind Down (per-user install)
+TEXT
+}
+case "${1:-open}" in
+  open|launch)
+    if [ -t 1 ] && command -v setsid >/dev/null; then setsid -f "$APP" >/dev/null 2>&1; else exec "$APP"; fi ;;
+  status) exec "$APP" --status ;;
+  cancel) shift; exec "$APP" --cancel "$@" ;;
+  repair)
+    if per_user; then exec "$APP_DIR/install.sh"; fi
+    echo "Wind Down was installed by your package manager. Reinstall it with: sudo pacman -S wind-down" >&2; exit 1 ;;
+  uninstall)
+    if per_user; then exec "$APP_DIR/uninstall.sh"; fi
+    echo "Wind Down was installed by your package manager. Remove it with: sudo pacman -R wind-down" >&2; exit 1 ;;
+  help|-h|--help) help ;;
+  *) echo "Unknown Wind Down command: $1" >&2; help >&2; exit 2 ;;
+esac

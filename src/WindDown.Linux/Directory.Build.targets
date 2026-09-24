@@ -1,0 +1,6 @@
+<Project>
+  <!-- Avalonia's build tools send anonymous usage statistics during every build.
+       Replacing their target with an empty one keeps any build of this project offline,
+       whatever the environment (build.sh, makepkg, or an IDE). -->
+  <Target Name="AvaloniaStats" />
+</Project>

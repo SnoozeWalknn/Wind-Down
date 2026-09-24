@@ -1,0 +1,93 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:WindDown.App.Controls" x:Class="WindDown.App.MainWindow"
+        Title="Wind Down" Width="492" Height="880" MinWidth="440" MinHeight="590" WindowStartupLocation="CenterScreen">
+ <Grid x:Name="Root" RowDefinitions="*,48">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+   <StackPanel Margin="32,24,32,24" Spacing="20">
+    <Border x:Name="Message" IsVisible="False" CornerRadius="8" BorderThickness="1" Padding="14,12" Background="{DynamicResource CardBrush}" BorderBrush="{DynamicResource CardStrokeBrush}">
+     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+      <Border x:Name="MessageMark" Width="4" CornerRadius="2" VerticalAlignment="Stretch"/>
+      <StackPanel Grid.Column="1" Spacing="3">
+       <TextBlock x:Name="MessageTitle" FontWeight="SemiBold" TextWrapping="Wrap"/>
+       <TextBlock x:Name="MessageDetail" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}"/>
+      </StackPanel>
+      <Button Grid.Column="2" Classes="quiet" Content="✕" VerticalAlignment="Top" Padding="8,4" Click="OnDismissMessage" AutomationProperties.Name="Dismiss message"/>
+     </Grid>
+    </Border>
+    <StackPanel x:Name="Setup" Spacing="22">
+     <StackPanel Spacing="5"><TextBlock x:Name="PageTitle" Text="Power timer" FontSize="28" FontWeight="SemiBold"/><TextBlock Text="A little time. Then, a well-earned rest." Foreground="{DynamicResource TextSecondaryBrush}" FontSize="13"/></StackPanel>
+     <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+      <ToggleButton x:Name="ShutdownChoice" Classes="choice" IsChecked="True" Height="58" Click="OnShutdown" AutomationProperties.Name="Shut Down"><StackPanel Orientation="Horizontal" Spacing="12"><Path Classes="icon" Data="{StaticResource PowerIcon}" Width="19" Height="19"/><TextBlock Text="Shut Down" FontWeight="SemiBold" VerticalAlignment="Center"/></StackPanel></ToggleButton>
+      <ToggleButton x:Name="SleepChoice" Classes="choice" Grid.Column="1" Height="58" Click="OnSleep" AutomationProperties.Name="Sleep"><StackPanel Orientation="Horizontal" Spacing="12"><Path Classes="icon" Data="{StaticResource MoonIcon}" Width="19" Height="19"/><TextBlock Text="Sleep" FontWeight="SemiBold" VerticalAlignment="Center"/></StackPanel></ToggleButton>
+     </Grid>
+     <StackPanel Spacing="14">
+      <Border Background="{DynamicResource LayerBrush}" Padding="3" CornerRadius="8">
+       <Grid ColumnDefinitions="*,*" ColumnSpacing="3">
+        <ToggleButton x:Name="InMode" Classes="choice" IsChecked="True" Content="In" Height="34" Click="OnIn" AutomationProperties.Name="After a duration"/>
+        <ToggleButton x:Name="AtMode" Classes="choice" Grid.Column="1" Content="At" Height="34" Click="OnAt" AutomationProperties.Name="At a clock time"/>
+       </Grid>
+      </Border>
+      <Grid ColumnDefinitions="*,18,*,Auto" ColumnSpacing="8">
+       <local:TimeDial x:Name="Hours"/>
+       <TextBlock Grid.Column="1" Text=":" FontSize="42" FontWeight="Light" Foreground="{DynamicResource TextTertiaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-25,0,0"/>
+       <local:TimeDial x:Name="Minutes" Grid.Column="2"/>
+       <ComboBox x:Name="Period" Grid.Column="3" Width="80" VerticalAlignment="Center" Margin="0,-24,0,0" IsVisible="False" SelectionChanged="OnPeriodChanged" AutomationProperties.Name="AM or PM"/>
+      </Grid>
+      <StackPanel x:Name="Presets" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
+       <Button Content="30 min" Tag="30" Classes="quiet" Click="OnPreset"/><Button Content="1 hr" Tag="60" Classes="quiet" Click="OnPreset"/><Button Content="2 hr" Tag="120" Classes="quiet" Click="OnPreset"/><Button Content="3 hr" Tag="180" Classes="quiet" Click="OnPreset"/>
+      </StackPanel>
+      <TextBlock x:Name="TargetPreview" HorizontalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="13" TextWrapping="Wrap" TextAlignment="Center"/>
+     </StackPanel>
+     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+      <Path Classes="icon" Data="{StaticResource BellIcon}" Width="16" Height="16" VerticalAlignment="Center" Stroke="{DynamicResource TextSecondaryBrush}"/>
+      <TextBlock Text="Remind me" Grid.Column="1" VerticalAlignment="Center" FontSize="13"/>
+      <ComboBox x:Name="Warning" Grid.Column="2" Width="178" SelectionChanged="OnWarningChanged" AutomationProperties.Name="Warning before the action">
+       <ComboBoxItem Content="No warning" Tag="0"/><ComboBoxItem Content="1 minute before" Tag="1"/><ComboBoxItem Content="5 minutes before" Tag="5"/><ComboBoxItem Content="10 minutes before" Tag="10"/>
+      </ComboBox>
+     </Grid>
+     <StackPanel Spacing="10">
+      <Button x:Name="ScheduleButton" Content="Schedule shutdown" Classes="accent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="46" Click="OnSchedule"/>
+      <Button x:Name="BackButton" Content="Keep current schedule" HorizontalAlignment="Center" Classes="quiet" IsVisible="False" Click="OnBack"/>
+     </StackPanel>
+    </StackPanel>
+    <StackPanel x:Name="Active" IsVisible="False" Spacing="25" Margin="0,20,0,0">
+     <StackPanel Spacing="18" HorizontalAlignment="Center">
+      <Border Width="64" Height="64" CornerRadius="32" Background="{DynamicResource AccentSoftBrush}"><Path x:Name="ActiveIcon" Classes="icon" Data="{StaticResource PowerIcon}" Width="26" Height="26" Stroke="{DynamicResource AccentTextBrush}"/></Border>
+      <TextBlock x:Name="ActiveTitle" Text="Shutdown scheduled" FontSize="23" FontWeight="SemiBold" HorizontalAlignment="Center" AutomationProperties.LiveSetting="Polite"/>
+     </StackPanel>
+     <StackPanel Spacing="5" Margin="0,14,0,0">
+      <Viewbox Stretch="Uniform" MaxHeight="76"><TextBlock x:Name="Countdown" Text="02:48:37" FontSize="64" FontWeight="Light" FontFeatures="+tnum"/></Viewbox>
+      <TextBlock Text="remaining" FontSize="13" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Center"/>
+     </StackPanel>
+     <StackPanel Spacing="20"><ProgressBar x:Name="Progress" Minimum="0" Maximum="100" Height="3" MinHeight="3"/><TextBlock x:Name="ActiveTarget" HorizontalAlignment="Center" FontSize="14"/></StackPanel>
+     <TextBlock Text="You can close this window. systemd will take it from here." TextWrapping="Wrap" TextAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="13" Margin="25,12"/>
+     <StackPanel Spacing="10">
+      <Button x:Name="CancelButton" Content="Cancel shutdown" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="46" Click="OnCancel"/>
+      <Button Content="Change schedule" HorizontalAlignment="Center" Classes="quiet" Click="OnEdit"/>
+     </StackPanel>
+     <TextBlock x:Name="ActiveWarning" TextAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource TextTertiaryBrush}" FontSize="12"/>
+    </StackPanel>
+   </StackPanel>
+  </ScrollViewer>
+  <Border Grid.Row="1" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,1,0,0" Padding="22,0,18,0">
+   <Grid ColumnDefinitions="Auto,*,Auto">
+    <Path Classes="icon" Data="{StaticResource ClockIcon}" Width="12" Height="12" StrokeThickness="1.5" VerticalAlignment="Center" Stroke="{DynamicResource TextTertiaryBrush}"/>
+    <TextBlock Grid.Column="1" Text="A quiet finish, on your terms" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
+    <Button Grid.Column="2" Classes="quiet" VerticalAlignment="Center" AutomationProperties.Name="Settings and about" ToolTip.Tip="Settings and about">
+     <Path Classes="icon" Data="{StaticResource MenuIcon}" Width="16" Height="16" Stroke="{DynamicResource TextPrimaryBrush}"/>
+     <Button.Flyout>
+      <MenuFlyout>
+       <MenuItem Header="Appearance">
+        <MenuItem x:Name="SystemThemeChoice" Header="Use system setting" ToggleType="Radio" GroupName="Theme" Tag="Default" Click="OnTheme"/>
+        <MenuItem x:Name="LightThemeChoice" Header="Light" ToggleType="Radio" GroupName="Theme" Tag="Light" Click="OnTheme"/>
+        <MenuItem x:Name="DarkThemeChoice" Header="Dark" ToggleType="Radio" GroupName="Theme" Tag="Dark" Click="OnTheme"/>
+       </MenuItem>
+       <MenuItem Header="How schedules work" Click="OnAbout"/>
+       <Separator/>
+       <MenuItem Header="Exit Wind Down" Click="OnExit"/>
+      </MenuFlyout>
+     </Button.Flyout>
+    </Button>
+   </Grid>
+  </Border>
+ </Grid>
+</Window>

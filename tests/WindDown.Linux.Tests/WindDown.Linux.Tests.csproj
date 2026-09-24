@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><RuntimeIdentifiers>linux-x64</RuntimeIdentifiers><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup>
+ <ItemGroup><ProjectReference Include="../../src/WindDown.Linux.Core/WindDown.Linux.Core.csproj"/></ItemGroup>
+</Project>

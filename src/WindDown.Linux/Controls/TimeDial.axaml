@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="WindDown.App.Controls.TimeDial">
+ <StackPanel Spacing="6" HorizontalAlignment="Stretch">
+  <Border x:Name="DialSurface" CornerRadius="12" Background="{DynamicResource CardBrush}" BorderBrush="{DynamicResource CardStrokeBrush}" BorderThickness="1">
+   <Grid Margin="8,2" RowDefinitions="38,76,38">
+    <RepeatButton x:Name="Previous" Classes="step" Click="OnPrevious" AutomationProperties.Name="Decrease value"/>
+    <TextBox x:Name="Editor" Grid.Row="1" FontSize="54" FontWeight="Light" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" MinHeight="0" BorderThickness="0" Background="Transparent" Foreground="{DynamicResource AccentTextBrush}" SelectionBrush="{DynamicResource AccentBrush}" MaxLength="3" Text="00">
+     <TextBox.Styles>
+      <Style Selector="TextBox:focus /template/ Border#PART_BorderElement, TextBox:pointerover /template/ Border#PART_BorderElement"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/></Style>
+      <Style Selector="TextBox:focus, TextBox:pointerover"><Setter Property="Foreground" Value="{DynamicResource AccentTextBrush}"/></Style>
+     </TextBox.Styles>
+    </TextBox>
+    <RepeatButton x:Name="Next" Grid.Row="2" Classes="step" Click="OnNext" AutomationProperties.Name="Increase value"/>
+   </Grid>
+  </Border>
+  <TextBlock x:Name="Caption" HorizontalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="12"/>
+ </StackPanel>
+</UserControl>

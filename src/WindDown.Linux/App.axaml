@@ -1,0 +1,63 @@
+<Application xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="WindDown.App.App" RequestedThemeVariant="Default" Name="Wind Down">
+ <Application.Resources>
+  <ResourceDictionary>
+   <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource SystemAccentColor}"/>
+   <StreamGeometry x:Key="PowerIcon">M12 3 V11 M7.05 6.05 A7 7 0 1 0 16.95 6.05</StreamGeometry>
+   <StreamGeometry x:Key="MoonIcon">M20 14.5 A8 8 0 1 1 9.5 4 A6.5 6.5 0 0 0 20 14.5 Z</StreamGeometry>
+   <StreamGeometry x:Key="BellIcon">M6 16 V11 A6 6 0 0 1 18 11 V16 L19.5 18 H4.5 Z M10 20.5 A2 2 0 0 0 14 20.5</StreamGeometry>
+   <StreamGeometry x:Key="ClockIcon">M12 3 A9 9 0 1 1 11.99 3 Z M12 7 V12 L15 14</StreamGeometry>
+   <StreamGeometry x:Key="MenuIcon">M4 6 H20 M4 12 H20 M4 18 H20</StreamGeometry>
+   <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Light">
+     <SolidColorBrush x:Key="WindDownWindowBrush" Color="#FFF3F4F6"/>
+     <SolidColorBrush x:Key="CardBrush" Color="#FFFFFFFF"/>
+     <SolidColorBrush x:Key="CardStrokeBrush" Color="#1F000000"/>
+     <SolidColorBrush x:Key="LayerBrush" Color="#0D000000"/>
+     <SolidColorBrush x:Key="SubtleBrush" Color="#0F000000"/>
+     <SolidColorBrush x:Key="DividerBrush" Color="#14000000"/>
+     <SolidColorBrush x:Key="TextPrimaryBrush" Color="#E4000000"/>
+     <SolidColorBrush x:Key="TextSecondaryBrush" Color="#9E000000"/>
+     <SolidColorBrush x:Key="TextTertiaryBrush" Color="#72000000"/>
+     <SolidColorBrush x:Key="AccentTextBrush" Color="{DynamicResource SystemAccentColorDark1}"/>
+     <SolidColorBrush x:Key="AccentSoftBrush" Color="{DynamicResource SystemAccentColorLight3}"/>
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Dark">
+     <SolidColorBrush x:Key="WindDownWindowBrush" Color="#FF0B1220"/>
+     <SolidColorBrush x:Key="CardBrush" Color="#FF152135"/>
+     <SolidColorBrush x:Key="CardStrokeBrush" Color="#FF2A3A55"/>
+     <SolidColorBrush x:Key="LayerBrush" Color="#FF111B2D"/>
+     <SolidColorBrush x:Key="SubtleBrush" Color="#FF1C2A42"/>
+     <SolidColorBrush x:Key="DividerBrush" Color="#FF22324B"/>
+     <SolidColorBrush x:Key="TextPrimaryBrush" Color="#FFF4F7FC"/>
+     <SolidColorBrush x:Key="TextSecondaryBrush" Color="#FFB6C2D3"/>
+     <SolidColorBrush x:Key="TextTertiaryBrush" Color="#FF8290A7"/>
+     <SolidColorBrush x:Key="AccentTextBrush" Color="{DynamicResource SystemAccentColorLight2}"/>
+     <SolidColorBrush x:Key="AccentSoftBrush" Color="#FF1D2B44"/>
+     <!-- Midnight: tint Fluent's neutral control surfaces toward the navy palette. -->
+     <SolidColorBrush x:Key="ButtonBackground" Color="#E6172338"/>
+     <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#FF1D2B44"/>
+     <SolidColorBrush x:Key="ComboBoxBackground" Color="#E6172338"/>
+     <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#FF1D2B44"/>
+     <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="#FF152135"/>
+     <SolidColorBrush x:Key="MenuFlyoutPresenterBackground" Color="#FF152135"/>
+    </ResourceDictionary>
+   </ResourceDictionary.ThemeDictionaries>
+  </ResourceDictionary>
+ </Application.Resources>
+ <Application.Styles>
+  <FluentTheme/>
+  <Style Selector="Window"><Setter Property="Background" Value="{DynamicResource WindDownWindowBrush}"/><Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/></Style>
+  <Style Selector="Path.icon"><Setter Property="StrokeThickness" Value="1.8"/><Setter Property="StrokeLineCap" Value="Round"/><Setter Property="StrokeJoin" Value="Round"/><Setter Property="Stretch" Value="Uniform"/></Style>
+  <Style Selector="Button.quiet"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="12,7"/><Setter Property="CornerRadius" Value="6"/></Style>
+  <Style Selector="RepeatButton.step"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/><Setter Property="HorizontalAlignment" Value="Stretch"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="Height" Value="38"/><Setter Property="FontSize" Value="20"/><Setter Property="Foreground" Value="{DynamicResource TextTertiaryBrush}"/><Setter Property="IsTabStop" Value="False"/></Style>
+  <Style Selector="ToggleButton.choice"><Setter Property="Background" Value="{DynamicResource CardBrush}"/><Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource CardStrokeBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="8"/><Setter Property="HorizontalAlignment" Value="Stretch"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="VerticalContentAlignment" Value="Center"/></Style>
+  <Style Selector="ToggleButton.choice:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource SubtleBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource CardStrokeBrush}"/><Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/></Style>
+  <Style Selector="ToggleButton.choice:pressed /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource SubtleBrush}"/><Setter Property="Opacity" Value="0.7"/></Style>
+  <Style Selector="ToggleButton.choice:checked /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource CardBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/><Setter Property="Foreground" Value="{DynamicResource AccentTextBrush}"/></Style>
+  <Style Selector="ToggleButton.choice:checked:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource SubtleBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/><Setter Property="Foreground" Value="{DynamicResource AccentTextBrush}"/></Style>
+  <Style Selector="ToggleButton.choice:checked:pressed /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource SubtleBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/><Setter Property="Foreground" Value="{DynamicResource AccentTextBrush}"/></Style>
+  <Style Selector="ToggleButton.choice:disabled /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Opacity" Value="0.4"/></Style>
+  <Style Selector="ToggleButton.choice:checked"><Setter Property="Foreground" Value="{DynamicResource AccentTextBrush}"/></Style>
+  <Style Selector="ToggleButton.choice Path.icon"><Setter Property="Stroke" Value="{Binding $parent[ToggleButton].Foreground}"/></Style>
+ </Application.Styles>
+</Application>

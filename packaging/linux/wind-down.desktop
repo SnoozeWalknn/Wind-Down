@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Wind Down
+GenericName=Power Timer
+Comment=Schedule this PC to shut down or sleep
+Exec=wind-down
+Icon=wind-down
+Terminal=false
+Categories=Utility;System;
+Keywords=shutdown;sleep;suspend;timer;power;
+StartupWMClass=WindDown
+SingleMainWindow=true

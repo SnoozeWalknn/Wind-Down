@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework><RuntimeIdentifiers>linux-x64</RuntimeIdentifiers><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RootNamespace>WindDown.App</RootNamespace><AssemblyName>WindDown</AssemblyName>
+    <Product>Wind Down</Product><AssemblyTitle>Wind Down</AssemblyTitle><Description>Schedule this PC to shut down or sleep.</Description>
+    <Version>1.0.0</Version><FileVersion>1.0.0.0</FileVersion><AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.22" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.22" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.22" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.22" />
+    <ProjectReference Include="../WindDown.Linux.Core/WindDown.Linux.Core.csproj" />
+    <AvaloniaResource Include="Assets/**" />
+  </ItemGroup>
+</Project>

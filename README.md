@@ -1,6 +1,6 @@
 # Wind Down
 
-A native Windows 11 utility for scheduling **Shut Down** or **Sleep**, built with C#, WinUI 3 and Windows App SDK.
+A quiet power timer for scheduling **Shut Down** or **Sleep**. It runs natively on Windows 11 (C#, WinUI 3, Windows App SDK) and on CachyOS and other systemd-based Linux desktops (C#, Avalonia). For Linux, see [Linux (CachyOS)](#linux-cachyos) below.
 
 ## Screenshot
 
@@ -62,6 +62,51 @@ The build produces `artifacts/Wind-Down-1.0-Project`, `artifacts/Wind-Down-1.0-W
 Tests use an isolated per-user task and an inert worker mode. **They never call a shutdown or sleep API.** See `docs/Verification.md` for checks performed and the remaining physical-device acceptance checks.
 
 The design, state transitions, timing policy, and platform constraints are documented in `docs/Architecture.md`.
+
+## Linux (CachyOS)
+
+The Linux port uses the same design and scheduling rules. Under the hood it uses Linux services instead of Windows ones. See `docs/Architecture.md` for details.
+
+### Install on CachyOS or Arch
+
+Build and install it as a pacman package:
+
+```bash
+sudo pacman -S --needed git base-devel dotnet-sdk-8.0
+git clone https://github.com/SnoozeWalknn/Wind-Down.git
+cd Wind-Down/packaging/linux
+makepkg -si
+```
+
+The package installs to `/usr/lib/wind-down`, adds Wind Down to your app menu, and provides the `wind-down` command. The build is self-contained, so the package doesn't depend on a .NET runtime. To remove it, run `sudo pacman -R wind-down`.
+
+To install for your user only, without pacman or root, build a release folder and run its installer:
+
+```bash
+./build.sh --smoke
+artifacts/Wind-Down-1.0-Linux-x64/install.sh
+```
+
+This installs to `~/.local/lib/wind-down` and `~/.local/bin/wind-down`, and adds an app-menu entry. Remove it with `wind-down uninstall`.
+
+```text
+wind-down             Open Wind Down
+wind-down status      Show the active schedule
+wind-down cancel      Cancel the active schedule
+wind-down repair      Restore the command, app-menu entry, and icon (per-user install)
+wind-down uninstall   Uninstall Wind Down (per-user install)
+```
+
+### How it behaves on Linux
+
+- **Scheduling:** a transient `systemd --user` timer owns the deadline. The schedule survives closing or crashing the app. It stops at sign-out and is dropped on reboot. Timers use `Persistent=false` and `WakeSystem=false`, and the one-minute lateness guard is unchanged. So Wind Down never wakes the PC, never catches up after sleep, and skips schedules made before a restart. The boot session comes from `/proc/sys/kernel/random/boot_id`.
+- **Shutdown:** Wind Down asks the desktop session to log out and power off: KDE Plasma (the CachyOS default), GNOME or Xfce. Apps with unsaved work can object. On other desktops it falls back to `systemctl poweroff`, which respects logind inhibitors. Nothing is forced, and no root or polkit prompt is needed on a normal local session.
+- **Sleep:** `systemctl suspend`, if logind reports `CanSuspend=yes`.
+- **Reminders:** desktop notifications via `notify-send` (libnotify), with a **Cancel** button tied to that schedule's identity.
+- **Tray:** a StatusNotifierItem tray icon, which works out of the box on KDE Plasma. GNOME needs the AppIndicator extension. Without a tray, run `wind-down` again to bring the window back.
+- **Wayland:** the app runs through XWayland on Wayland sessions.
+
+On Linux, run `./build.sh --smoke` for the build plus the 39-check scheduling suite, which uses an in-memory timer backend. Run `./build.sh --test` from a logged-in desktop session to also check real systemd user timers with the inert worker. **Neither calls a shutdown or sleep API.**
 
 ## Uninstall
 

@@ -1,0 +1,56 @@
+# Maintainer: SnoozeWalknn
+# Builds Wind Down from the git checkout this PKGBUILD lives in: run `makepkg -si` here.
+pkgname=wind-down
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="A quiet power timer: schedule this PC to shut down or sleep"
+arch=('x86_64')
+url="https://github.com/SnoozeWalknn/Wind-Down"
+license=('MIT')
+depends=('systemd' 'libnotify' 'fontconfig' 'libx11' 'libice' 'libsm' 'icu' 'gcc-libs' 'glibc' 'zlib')
+makedepends=('dotnet-sdk-8.0' 'git')
+options=('!strip' '!debug')
+# Cloned as wind-down-src: packaging/linux already has a file named wind-down (the launcher).
+_src=wind-down-src
+source=("$_src::git+file://${startdir%/packaging/linux}")
+sha256sums=('SKIP')
+
+# Keep every .NET and NuGet cache inside $srcdir, so `makepkg -c` leaves nothing in your home folder.
+_dotnet_env() {
+  export DOTNET_CLI_TELEMETRY_OPTOUT=1 DOTNET_NOLOGO=1 DOTNET_CLI_HOME="$srcdir/.dotnet"
+  export NUGET_PACKAGES="$srcdir/.nuget/packages" NUGET_HTTP_CACHE_PATH="$srcdir/.nuget/http-cache"
+  export NUGET_PLUGINS_CACHE_PATH="$srcdir/.nuget/plugins-cache" DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+  export DOTNET_GENERATE_ASPNET_CERTIFICATE=false AVALONIA_TELEMETRY_OPTOUT=1
+  export XDG_DATA_HOME="$srcdir/.local-share"   # NuGet markers and the tests' scratch files
+}
+# .NET keeps its certificate caches under $HOME whatever else is set, so give it a throwaway home.
+_dotnet() { HOME="$srcdir/.home" dotnet "$@"; }
+
+pkgver() {
+  cd "$_src"
+  printf "1.0.0.r%s.g%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "$_src"
+  _dotnet_env
+  _dotnet publish src/WindDown.Linux/WindDown.Linux.csproj -c Release -r linux-x64 --self-contained true \
+    -p:RestoreLockedMode=true -p:DebugType=none -o "$srcdir/publish"
+}
+
+check() {
+  cd "$_src"
+  _dotnet_env
+  _dotnet run --project tests/WindDown.Linux.Tests -c Release -p:RestoreLockedMode=true
+}
+
+package() {
+  cd "$_src"
+  install -d "$pkgdir/usr/lib/wind-down"
+  cp -a "$srcdir/publish/." "$pkgdir/usr/lib/wind-down/"
+  install -Dm755 packaging/linux/wind-down "$pkgdir/usr/bin/wind-down"
+  install -Dm644 packaging/linux/wind-down.desktop "$pkgdir/usr/share/applications/wind-down.desktop"
+  install -Dm644 packaging/linux/wind-down.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/wind-down.svg"
+  install -Dm644 src/WindDown.Linux/Assets/WindDown.png "$pkgdir/usr/share/icons/hicolor/256x256/apps/wind-down.png"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
